@@ -1,0 +1,38 @@
+version: "3.7"
+
+services:
+    kali:
+        build:
+            context: ./docker
+            dockerfile: kali.Dockerfile
+        image: "yvv4docker/kali"
+        privileged: false
+        hostname: kali
+        container_name: kali
+        dns:
+        - "8.8.8.8"
+        - "9.9.9.9"
+        volumes:
+        - ./data/:/data
+        tty: true
+        stdin_open: true
+        entrypoint: /usr/bin/bash
+
+    tor:
+        build:
+            args:
+                TOR_VERSION: 0.4.4.6
+            context: ./docker/tor
+            dockerfile: Dockerfile
+        image: "yvv4docker/tor"
+        privileged: false
+        hostname: tor
+        container_name: tor
+        dns:
+        - "8.8.8.8"
+        - "9.9.9.9"
+        ports:
+            - "9051:9050"
+#        volumes:
+#            - ./docker/tor/torrc:/etc/tor/torrc
+#        entrypoint: /usr/bin/tor -f /etc/tor/torrc
