@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  jupiter:
+    image: yvv4docker/jupiter:v2024-02-22
+    hostname: ai-jupiter
+    container_name: ai-jupiter
+    volumes:
+        - ./data/src:/home/user/src
+        - ./data/datasets:/home/user/datasets
+        - ./data/models:/home/user/models
+        - ./data/content/:/home/user/content
+    ports:
+        - "8888:8888"
+    command: "start-notebook.sh"
+    user: root
+    environment:
+      NB_USER: user
+      NB_UID: ${UID}
+      NB_GID: ${GID}
+      CHOWN_HOME: 'yes'
+      CHOWN_HOME_OPTS: -R
+    networks:
+      - ml_net
+
+networks:
+  ai_net:
+    name: "ml_net"
