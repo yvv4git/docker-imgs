@@ -4,7 +4,7 @@ FROM jupyter/base-notebook:latest
 RUN pip3 install opendatasets kaggle gdown
 
 # Install base packages
-RUN pip3 install numpy pandas matplotlib
+RUN pip3 install numpy pandas matplotlib pyarrow
 
 # Install math and statistics packages
 RUN pip3 install pulp scipy seaborn
