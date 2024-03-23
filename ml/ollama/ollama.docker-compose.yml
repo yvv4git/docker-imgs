@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  ollama-api:
+    image: ollama/ollama
+    hostname: ollama-api
+    container_name: ollama-api
+    user: root
+    networks:
+      - ml_ollama_net
+    ports:
+      - 11434:11434
+
+  ollama-ui:
+    image: ghcr.io/ivanfioravanti/chatbot-ollama:main
+    environment:
+      - OLLAMA_API_URL=http://ollama-api:11434
+    depends_on:
+      - ollama-api
+    networks:
+      - ml_ollama_net
+    ports:
+      - "3000:3000"
+
+networks:
+  ml_ollama_net:
+    name: "ml_ollama_net"
